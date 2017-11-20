@@ -3,11 +3,11 @@
 
 
 SerialPortMessageDecoder::SerialPortMessageDecoder()
-	: m_startIndex(0)
-	, m_soilMoistureValue(0)
+	: m_soilMoistureValue(0)
 	, m_temperature(0)
 	, m_humidity(0)
 	, m_UVLevel(0)
+	, m_startIndex(0)
 {
 }
 
@@ -17,7 +17,7 @@ SerialPortMessageDecoder::~SerialPortMessageDecoder()
 
 void SerialPortMessageDecoder::DecodeSerialPortMessage(const std::vector<unsigned int>& rxBuffer)
 {
-	for (int i = 0; i < rxBuffer.size(); i++)
+	for (size_t i = 0; i < rxBuffer.size(); i++)
 	{		
 		if (IsStartOfMessageFound(rxBuffer[i], rxBuffer[i + 1]))
 		{
