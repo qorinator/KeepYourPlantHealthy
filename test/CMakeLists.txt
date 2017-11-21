@@ -23,9 +23,10 @@ find_library(GTEST
 
 # Create executables out of the associated .cpp files
 add_executable(
-	googletest_example
-	googletest_example.cpp
+	SerialPortMessageDecoder_test
+	SerialPortMessageDecoder_test.cpp
+	../src/MessageDecoder.cpp
 )
 
 # Tell Cmake to link theses executables with the gtest library
-target_link_libraries(googletest_example ${GTEST} Threads::Threads)
+target_link_libraries(SerialPortMessageDecoder_test ${GTEST} Threads::Threads)
