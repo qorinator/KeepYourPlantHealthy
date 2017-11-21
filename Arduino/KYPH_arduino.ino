@@ -13,16 +13,14 @@ Sensor_i* soilMoisture = new SensorSoilMoisture();
 Sensor_i* dht11 = new SensorDHT11();
 Sensor_i* uv = new SensorUV();
 
-void setup()
-{
+void setup() {
 	Serial.begin(115200);
 	soilMoisture->SetPin(PinSoilMoistureSensor);
 	dht11->SetPin(PinDHT11Sensor);
 	uv->SetPin(PinDummy);
 }
 
-void loop()
-{
+void loop() {
 	soilMoisture->GetValue();
 	dht11->GetValue();
 	uv->GetValue();

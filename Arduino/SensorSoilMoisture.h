@@ -1,5 +1,3 @@
-// SensorSoilMoisture.h
-
 #ifndef _SENSORSOILMOISTURE_h
 #define _SENSORSOILMOISTURE_h
 

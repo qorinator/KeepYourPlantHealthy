@@ -25,6 +25,5 @@ private:
 	SI114X si114x;
 };
 
-
 #endif
 

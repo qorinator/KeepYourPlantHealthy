@@ -1,7 +1,6 @@
 #include "SensorWaterFlow.h"
 
-SensorWaterFlow::SensorWaterFlow()
-{}
+SensorWaterFlow::SensorWaterFlow() {}
 
 std::vector<byte> SensorWaterFlow::GetValue() {
 	ReadWaterFlowSensor();

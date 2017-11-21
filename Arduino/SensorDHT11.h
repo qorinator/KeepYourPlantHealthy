@@ -15,7 +15,6 @@
 	#error "CPU SPEED NOT SUPPORTED"
 #endif
 
-
 #include "Sensor_i.h"
 
 class SensorDHT11 : public Sensor_i
@@ -37,7 +36,6 @@ private:
 	boolean _firstReadFlag;
 	unsigned long _poweredOnTime;
 };
-
 
 #endif // _SENSORDHT11_h
 

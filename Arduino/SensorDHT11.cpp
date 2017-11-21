@@ -1,7 +1,6 @@
 #include "SensorDHT11.h"
 
-SensorDHT11::SensorDHT11()
-{}
+SensorDHT11::SensorDHT11() {}
 
 std::vector<byte> SensorDHT11::GetValue() {
 	ReadDHT11();

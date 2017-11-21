@@ -20,5 +20,4 @@ private:
 	void ReadWaterFlowSensor();
 };
 
-
 #endif // _SENSORWATERFLOW_h

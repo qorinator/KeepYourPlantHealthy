@@ -1,5 +1,3 @@
-// Sensor_i.h
-
 #ifndef _SENSOR_I_h
 #define _SENSOR_I_h
 

@@ -1,9 +1,6 @@
 #include "SensorUV.h"
 
-SensorUV::SensorUV()
-{
-	Serial.println("SensorSoilMoisture is created");
-}
+SensorUV::SensorUV() {}
 
 std::vector<byte> SensorUV::GetValue() {
 	ReadUVSensor();

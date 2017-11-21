@@ -1,9 +1,6 @@
 #include "SensorSoilMoisture.h"
 
-SensorSoilMoisture::SensorSoilMoisture()
-{
-	Serial.println("SensorSoilMoisture is created");
-}
+SensorSoilMoisture::SensorSoilMoisture() {}
 
 std::vector<byte> SensorSoilMoisture::GetValue() {
 	ReadSoilMoistureSensor();
