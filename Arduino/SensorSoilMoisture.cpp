@@ -2,19 +2,13 @@
 
 SensorSoilMoisture::SensorSoilMoisture() {}
 
-std::vector<byte> SensorSoilMoisture::GetValue() {
+Package SensorSoilMoisture::GetPackage() {
 	ReadSoilMoistureSensor();
-	Serial.print("Size of soil moisture data ");
-	Serial.print(_data.size());
-	Serial.print(" : ");
-	Serial.print(_data[0]);
-	Serial.print(", ");
-	Serial.print(_data[1]);
-	Serial.print("\r\n");
-	return _data;
+	AppendDataToPackage();
+	return _package;
 }
 
-void SensorSoilMoisture::SetPin(int sensorPin) {
+void SensorSoilMoisture::InitializeSensor(int sensorPin) {
 	_pin = sensorPin;
 }
 
@@ -22,5 +16,11 @@ void SensorSoilMoisture::ReadSoilMoistureSensor() {
 	_data.clear();
 	int val = analogRead(_pin);
 	_data.push_back((val & 0xFF00) >> 8);
-	_data.push_back((val & 0xFF));
+	_data.push_back((val & 0xFF));	
+}
+
+void SensorSoilMoisture::AppendDataToPackage() {
+	_package.SetData(_data);
+	_package.SetID(IDSoilMoistureSensor);
+	_package.SetLength(_data.size());
 }

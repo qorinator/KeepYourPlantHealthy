@@ -2,39 +2,31 @@
 
 SensorDHT11::SensorDHT11() {}
 
-std::vector<byte> SensorDHT11::GetValue() {
+Package SensorDHT11::GetPackage() {
 	ReadDHT11();
-	return _data;
+	AppenDataToPackage();
+	return _package;
 }
 
-void SensorDHT11::SetPin(int sensorPin) {
+void SensorDHT11::InitializeSensor(int sensorPin) {
 	_pin = sensorPin;
 }
 
 void SensorDHT11::ReadDHT11() {
 	_data.clear();
+	if (GetDataFromDataBus())
+		UpdateNewData();
+	
+}
+bool SensorDHT11::GetDataFromDataBus() {
 	if (IsDataBusStable()) {
 		SendStartSignal();
 		WaitForOutputReady();
 		ReadDataBus();
+		return true;
 	}
-	if (IsCheckSumOK())
-		RemoveChecksumFromDataVector();
-	else
-		_data.clear();
-	Serial.print("Size of DHT11 data ");
-	Serial.print(_data.size());
-	Serial.print(" : ");
-	Serial.print(_data[0]);
-	Serial.print(", ");
-	Serial.print(_data[1]);
-	Serial.print(", ");
-	Serial.print(_data[2]);
-	Serial.print(", ");
-	Serial.print(_data[3]);
-	Serial.print("\r\n");
+	return false;
 }
-
 bool SensorDHT11::IsDataBusStable() {
 	if (_firstReadFlag) {
 		unsigned long currentReadingDuration = millis();
@@ -88,9 +80,23 @@ void SensorDHT11::ReadDataBus()
 		}
 	}	
 }
+
+void SensorDHT11::UpdateNewData() {
+	if (IsCheckSumOK()) {
+		RemoveChecksumFromDataVector();
+	}
+	else
+		_data.clear();
+}
 boolean SensorDHT11::IsCheckSumOK() {
 	return ((_data[0] + _data[1] + _data[2] + _data[3]) == _data[4]);
 }
 void SensorDHT11::RemoveChecksumFromDataVector() {
 	_data.pop_back();
+}
+
+void SensorDHT11::AppenDataToPackage() {
+	_package.SetData(_data);
+	_package.SetID(IDDHT11);
+	_package.SetLength(_data.size());
 }

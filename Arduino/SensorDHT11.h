@@ -16,21 +16,25 @@
 #endif
 
 #include "Sensor_i.h"
+#include "Package.h"
 
 class SensorDHT11 : public Sensor_i
 {
 public:
 	 SensorDHT11();
-	 std::vector<byte> GetValue() final;
-	 void SetPin(int sensorPin) final;
+	 void InitializeSensor(int sensorPin) final;
+	 Package GetPackage() final;
 private:
 	void ReadDHT11();
+	bool GetDataFromDataBus();
 	bool IsDataBusStable();
-	void ReadDataBus();
-	void SendStartSignal();
+	void SendStartSignal();	
 	void WaitForOutputReady();
+	void ReadDataBus();
+	void UpdateNewData();
 	bool IsCheckSumOK();
 	void RemoveChecksumFromDataVector();
+	void AppenDataToPackage();
 private:
 	static const uint8_t _dataLength = 5;
 	boolean _firstReadFlag;

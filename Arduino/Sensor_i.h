@@ -7,6 +7,7 @@
 	#include "WProgram.h"
 #endif
 
+#include "Package.h"
 #include <StandardCplusplus\StandardCplusplus.h>
 #include <StandardCplusplus\vector>
 
@@ -18,16 +19,22 @@
 #define PinWaterFlowSensor		5
 #define PinDummy				0
 
+#define IDSoilMoistureSensor	1
+#define IDDHT11					2
+#define IDUVSensor				3
+#define IDWaterFlowSensor		4
+
 class Sensor_i
 {
 public:
 	Sensor_i();
 	virtual ~Sensor_i() = 0;
-	virtual std::vector<byte> GetValue() = 0;
-	virtual void SetPin(int sensorPin) = 0;
+	virtual Package GetPackage() = 0;
+	virtual void InitializeSensor(int sensorPin) = 0;
 protected: 
 	int _pin;
 	std::vector<byte> _data;
+	Package _package;
 };
 
 #endif

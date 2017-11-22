@@ -1,3 +1,5 @@
+#include "PackageSorter.h"
+#include "Package.h"
 #include "SensorUV.h"
 #include "SensorWaterFlow.h"
 #include "SensorSoilMoisture.h"
@@ -21,8 +23,9 @@ void setup() {
 }
 
 void loop() {
-	soilMoisture->GetValue();
-	dht11->GetValue();
-	uv->GetValue();
+	soilMoisture->GetPackage().PrintPackage();
+	uv->GetPackage().PrintPackage();
+	dht11->GetPackage().PrintPackage();
+
 	delay(5000);
 }

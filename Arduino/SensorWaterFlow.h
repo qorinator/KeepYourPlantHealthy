@@ -8,16 +8,18 @@
 #endif
 
 #include "Sensor_i.h"
+#include "Package.h"
 
 class SensorWaterFlow final
 	: public Sensor_i
 {
 public:
 	SensorWaterFlow();
-	std::vector<byte> GetValue() final;
-	void SetPin(int sensorPin) final;
+	void InitializeSensor(int sensorPin) final;
+	Package GetPackage() final;
 private:
 	void ReadWaterFlowSensor();
+	void AppendPackageToData();
 };
 
 #endif // _SENSORWATERFLOW_h
