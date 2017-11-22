@@ -21,6 +21,6 @@ void SensorUV::ReadUVSensor() {
 
 void SensorUV::AppenDataToPackage() {
 	_package.SetData(_data);
-	_package.SetID(IDDHT11);
+	_package.SetID(IDUVSensor);
 	_package.SetLength(_data.size());
 }
