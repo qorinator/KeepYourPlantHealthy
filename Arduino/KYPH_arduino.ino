@@ -1,3 +1,4 @@
+#include "SerialReadHandler.h"
 #include "ProtocolWrapper.h"
 #include "Package.h"
 #include "SensorUV.h"
@@ -14,9 +15,13 @@
 std::vector<Sensor_i*> sensors;
 std::vector<Package> packages;
 std::vector<byte> message;
+SerialReadHandler handler;
+
+bool IsThereNewMessage = false;
 
 void setup() {
 	Serial.begin(115200);
+	handler.FlushMessageBuffer();
 	sensors.push_back(new SensorSoilMoisture());	
 	sensors.push_back(new SensorDHT11());
 	sensors.push_back(new SensorUV());
@@ -40,25 +45,35 @@ void setup() {
 }
 
 void loop() {
-	packages.clear();
-	message.clear();
-	for (auto it = sensors.begin(); it != sensors.end(); ++it) {
-		packages.push_back((*it)->GetPackage());
-	}
-	ProtocolWrapper* wrapper = new ProtocolWrapper(packages);
-	message = wrapper->GetWrappedPackages();
-	delete wrapper;
-	wrapper = nullptr;
+	if (IsThereNewMessage) {
+		handler.CheckForDataRequest();
+		if (handler.IsDataRequested())
+		{			
+			packages.clear();
+			message.clear();
+			for (auto it = sensors.begin(); it != sensors.end(); ++it) {
+				packages.push_back((*it)->GetPackage());
+			}
+			ProtocolWrapper* wrapper = new ProtocolWrapper(packages);
+			message = wrapper->GetWrappedPackages();
+			delete wrapper;
+			wrapper = nullptr;
+			
+			for (auto it = message.begin(); it != message.end(); ++it) {
+				Serial.write(*it);
+			}
 
-	Serial.print("size of message ");
-	Serial.print(message.size());
-	Serial.print(" : ");
-	for (auto it = message.begin(); it != message.end(); ++it) {
-		Serial.print(*it);
-		Serial.print("  ");
+			handler.RequestCompleted();
+		}
+		IsThereNewMessage = false;
 	}
-	Serial.print("\n");
-
-	delay(5000);
+	
 }
 
+void serialEvent() {
+	IsThereNewMessage = false;
+	while (Serial.available()) {
+		handler.AppendData(Serial.read());
+	}	
+	IsThereNewMessage = true;
+}

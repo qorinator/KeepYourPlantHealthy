@@ -7,12 +7,15 @@ ProtocolWrapper::ProtocolWrapper(std::vector<Package> const& packages)
 }
 
 void ProtocolWrapper::WrapPackages(std::vector<Package> const& packages) {
+	InitializeMessage();
 	AddStartMessage(packages.size());
 	AppendPackage(packages);
 	AddChecksum();
 }
-void ProtocolWrapper::AddStartMessage(byte packagesSize) {
+void ProtocolWrapper::InitializeMessage() {
 	_wrappedPackage.clear();
+}
+void ProtocolWrapper::AddStartMessage(byte const& packagesSize) {
 	_wrappedPackage.push_back(0x00);
 	_wrappedPackage.push_back(0xF0);
 	_wrappedPackage.push_back(0x0F);
@@ -34,9 +37,8 @@ void ProtocolWrapper::AddChecksum() {
 }
 byte ProtocolWrapper::CalculateChecksum() {
 	byte checksum = 0;
-	for (auto it = _wrappedPackage.begin(); it != _wrappedPackage.end(); ++it) {
-		checksum += *it;
-		checksum = checksum & 0xFF;
+	for (auto it = _wrappedPackage.begin(); it != _wrappedPackage.end(); ++it) {		
+		checksum = (checksum + (*it)) & 0xFF;
 	}
 	return checksum;
 }

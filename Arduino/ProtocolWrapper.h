@@ -18,7 +18,8 @@ public:
 	std::vector<byte> GetWrappedPackages() const;
 private:
 	void WrapPackages(std::vector<Package> const& packages);
-	void AddStartMessage(byte packagesSize);
+	void InitializeMessage();
+	void AddStartMessage(byte const& packagesSize);
 	void AppendPackage(std::vector<Package> const& packages);
 	byte CalculateChecksum();
 	void AddChecksum();
