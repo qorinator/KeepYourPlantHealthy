@@ -15,6 +15,7 @@ private:
 	bool IsBaudrateSet(struct termios& tty, const speed_t baudrate);
 	bool IsInputBaudrateSet(struct termios& tty, const speed_t baudrate);
 	bool IsOutputBaudrateSet(struct termios& tty, const speed_t baudrate);
+	void ConfigureMode(struct termios& tty);
 	void SetControlMode(struct termios& tty);
 	void SetInputMode(struct termios& tty);
 	void SetOutputMode(struct termios& tty);

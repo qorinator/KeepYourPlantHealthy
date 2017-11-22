@@ -80,20 +80,26 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Package.h" />
+    <ClInclude Include="ProtocolWrapper.h" />
     <ClInclude Include="SensorDHT11.h" />
     <ClInclude Include="SensorSoilMoisture.h" />
     <ClInclude Include="SensorUV.h" />
     <ClInclude Include="SensorWaterFlow.h" />
     <ClInclude Include="Sensor_i.h" />
+    <ClInclude Include="SerialReadHandler.h" />
     <ClInclude Include="__vm\.Arduino.vsarduino.h" />
     <ClInclude Include="__vm\.KYPH_arduino.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Package.cpp" />
+    <ClCompile Include="ProtocolWrapper.cpp" />
     <ClCompile Include="SensorDHT11.cpp" />
     <ClCompile Include="SensorSoilMoisture.cpp" />
     <ClCompile Include="SensorUV.cpp" />
     <ClCompile Include="SensorWaterFlow.cpp" />
     <ClCompile Include="Sensor_i.cpp" />
+    <ClCompile Include="SerialReadHandler.cpp" />
   </ItemGroup>
   <PropertyGroup>
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
