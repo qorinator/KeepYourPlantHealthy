@@ -9,6 +9,6 @@ add_executable(KeepYourPlantHealhyExecutable
 	KeepYourPlantHealthy.cpp
 	ConfigureSerialPort.cpp
 	SerialPort.cpp
-	SerialPortMessageDecoder.cpp
+	MessageDecoder.cpp
 )
 

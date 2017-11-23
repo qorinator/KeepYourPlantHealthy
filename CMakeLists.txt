@@ -7,5 +7,5 @@ project (KeepYourPlantHealhy)
 
 # Tell CMake to go into other directories and read CMakeLists.txt file in those
 # 	directories
-# add_subdirectory(src)
-add_subdirectory(test)
+add_subdirectory(src)
+# add_subdirectory(test)
