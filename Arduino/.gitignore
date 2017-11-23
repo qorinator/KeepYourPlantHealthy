@@ -1,0 +1,4 @@
+# Ignore the build and lib dirs
+Debug
+_documentation/*
+!_documentation/*.vpp

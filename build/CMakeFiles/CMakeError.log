@@ -1,0 +1,35 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/pi/Documents/Projects/KeepYourPlantHealthy/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_195fb/fast"
+/usr/bin/make -f CMakeFiles/cmTC_195fb.dir/build.make CMakeFiles/cmTC_195fb.dir/build
+make[1]: Entering directory '/home/pi/Documents/Projects/KeepYourPlantHealthy/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_195fb.dir/CheckSymbolExists.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_195fb.dir/CheckSymbolExists.c.o   -c /home/pi/Documents/Projects/KeepYourPlantHealthy/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_195fb
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_195fb.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_195fb.dir/CheckSymbolExists.c.o  -o cmTC_195fb 
+CMakeFiles/cmTC_195fb.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x38): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_195fb.dir/build.make:97: recipe for target 'cmTC_195fb' failed
+make[1]: *** [cmTC_195fb] Error 1
+make[1]: Leaving directory '/home/pi/Documents/Projects/KeepYourPlantHealthy/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_195fb/fast' failed
+make: *** [cmTC_195fb/fast] Error 2
+
+File /home/pi/Documents/Projects/KeepYourPlantHealthy/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
