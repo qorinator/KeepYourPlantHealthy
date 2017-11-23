@@ -1,1 +1,0 @@
-/usr/bin/c++   -Wall -std=c++11   CMakeFiles/KeepYourPlantHealhyExecutable.dir/KeepYourPlantHealthy.cpp.o CMakeFiles/KeepYourPlantHealhyExecutable.dir/ConfigureSerialPort.cpp.o CMakeFiles/KeepYourPlantHealhyExecutable.dir/SerialPort.cpp.o CMakeFiles/KeepYourPlantHealhyExecutable.dir/MessageDecoder.cpp.o  -o KeepYourPlantHealhyExecutable 

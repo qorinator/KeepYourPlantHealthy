@@ -1,5 +1,0 @@
-/home/pi/Documents/Projects/KeepYourPlantHealthy/build/CMakeFiles/rebuild_cache.dir
-/home/pi/Documents/Projects/KeepYourPlantHealthy/build/CMakeFiles/edit_cache.dir
-/home/pi/Documents/Projects/KeepYourPlantHealthy/build/src/CMakeFiles/rebuild_cache.dir
-/home/pi/Documents/Projects/KeepYourPlantHealthy/build/src/CMakeFiles/edit_cache.dir
-/home/pi/Documents/Projects/KeepYourPlantHealthy/build/src/CMakeFiles/KeepYourPlantHealhyExecutable.dir
