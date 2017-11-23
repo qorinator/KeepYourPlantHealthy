@@ -1,4 +1,4 @@
-#include "ConfigureSerialPort.h"
+#include "SPConfigure.h"
 #include "KYPHException.hpp"
 
 #include <string.h>

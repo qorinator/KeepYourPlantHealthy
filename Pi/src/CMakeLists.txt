@@ -6,9 +6,9 @@ include_directories("../include")
 
 # Create executables out of the associated .cpp files
 add_executable(KeepYourPlantHealhyExecutable
-	KeepYourPlantHealthy.cpp
-	ConfigureSerialPort.cpp
+	KeepYourPlantHealthy.cpp	
 	SerialPort.cpp
+	SPConfigure.cpp
 	MessageDecoder.cpp
 )
 

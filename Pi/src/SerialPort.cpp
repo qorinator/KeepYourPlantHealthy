@@ -1,5 +1,5 @@
 #include "SerialPort.h"
-#include "ConfigureSerialPort.h"
+#include "SPConfigure.h"
 #include "KYPHException.hpp"
 
 #include <fcntl.h>
@@ -29,6 +29,7 @@ SerialPort::SerialPort(const char* filePath, int baudrate)
 		exit(EXIT_FAILURE);
 	}
 }
+
 void SerialPort::OpenPort(const char* filePath) {	
 	m_fileDescriptor = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY);
 	if(!IsPortOpen())
@@ -40,7 +41,11 @@ bool SerialPort::IsPortOpen() {
 
 SerialPort::~SerialPort() {	
 	ClosePort();
-	std::cout << "Port is closed" << std::endl;
+}
+
+void SerialPort::SendDataRequest() {
+	int buffer[6] = {0x00, 0xF0, 0x0E, 0x00, 0x00, 0xFE };
+	write(m_fileDescriptor, buffer, sizeof buffer);
 }
 
 std::vector<unsigned int> SerialPort::ReadRXBuffer() {
@@ -59,12 +64,7 @@ std::vector<unsigned int> SerialPort::ReadRXBuffer() {
 	return temp;
 }
 
-void SerialPort::SendDataRequest() {
-	int buffer[11] = { 	0x00, 0xF0, 0x0F,
-						0x00, 0x53, 0x54, 0x41, 0x52, 0x54,
-						0x00, 0x8E };
-	write(m_fileDescriptor, buffer, sizeof buffer);
-}
+
 
 bool SerialPort::IsMessageReceived() {
 	bool message = m_messageReceived;
