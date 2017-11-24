@@ -48,7 +48,7 @@ void loop() {
 	if (IsThereNewMessage) {
 		handler.CheckForDataRequest();
 		if (handler.IsDataRequested())
-		{			
+		{		
 			packages.clear();
 			message.clear();
 			for (auto it = sensors.begin(); it != sensors.end(); ++it) {
@@ -66,8 +66,7 @@ void loop() {
 			handler.RequestCompleted();
 		}
 		IsThereNewMessage = false;
-	}
-	
+	}	
 }
 
 void serialEvent() {

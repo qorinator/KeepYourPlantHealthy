@@ -10,7 +10,7 @@ bool SerialReadHandler::IsDataRequested() const {
 	return _dataRequestStatus;
 }
 
-void SerialReadHandler::AppendData(byte const& inChar) {
+void SerialReadHandler::AppendData(byte const& inChar) {	
 	_data.push_back(inChar);
 }
 
