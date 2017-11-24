@@ -9,6 +9,7 @@ add_executable(KeepYourPlantHealhyExecutable
 	KeepYourPlantHealthy.cpp	
 	SerialPort.cpp
 	SPConfigure.cpp
+	ProtocolUnwrapper.cpp
 	MessageDecoder.cpp
 )
 

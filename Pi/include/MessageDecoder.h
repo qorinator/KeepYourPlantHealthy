@@ -22,6 +22,7 @@ private:
 	bool IsCheckSumCorrect(const buffer_t& rxBuffer);
 	void DecodedMessageToSensorsValue(const buffer_t& rxBuffer);
 private:
+	
 	unsigned int m_soilMoistureValue;
 	float m_temperature;
 	float m_humidity;

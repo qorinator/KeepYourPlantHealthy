@@ -6,16 +6,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <iostream>
-// #include <errno.h>
 
-
-// Serial Port interrutpt handler
 bool SerialPort::m_messageReceived = false;
-void SerialPort::SerialPortSignalHandler(int status) {	 
+void SerialPort::SerialPortSignalHandler(int status) {
 	m_messageReceived = true;
 }
 
-// Public function
 SerialPort::SerialPort(const char* filePath, int baudrate)
 	: m_baudrate(baudrate) 
 {
@@ -35,48 +31,11 @@ void SerialPort::OpenPort(const char* filePath) {
 	if(!IsPortOpen())
 		throw OpenFileFailure();
 }
+
 bool SerialPort::IsPortOpen() {
 	return (m_fileDescriptor != -1);
 }
 
-SerialPort::~SerialPort() {	
-	ClosePort();
-}
-
-void SerialPort::SendDataRequest() {
-	int buffer[6] = {0x00, 0xF0, 0x0E, 0x00, 0x00, 0xFE };
-	write(m_fileDescriptor, buffer, sizeof buffer);
-}
-
-std::vector<unsigned int> SerialPort::ReadRXBuffer() {
-	char buf[30] = { 0 };
-	int n = read(m_fileDescriptor, buf, sizeof buf);
-	std::cout << "===============================" << std::endl; 
-	std::cout << "Received " << n << " bytes"  << std::endl;
-	for (int i = 0; i < n; i++)
-	{
-		std::cout << (unsigned int)buf[i] << " ";
-		m_rxBuffer.push_back(buf[i]);
-	}
-	std::cout << std::endl;
-	std::vector<unsigned int> temp = m_rxBuffer;
-	m_rxBuffer.clear();
-	return temp;
-}
-
-
-
-bool SerialPort::IsMessageReceived() {
-	bool message = m_messageReceived;
-	m_messageReceived = false;
-	return message;
-}
-
-// Private function
-
-void SerialPort::ClosePort() {
-	close(m_fileDescriptor);
-}
 void SerialPort::ConfigurePortInterrupt() {
 	m_saio.sa_handler = SerialPortSignalHandler;
 	m_saio.sa_flags = 0;
@@ -85,4 +44,35 @@ void SerialPort::ConfigurePortInterrupt() {
 	fcntl(m_fileDescriptor, F_SETFL, FNDELAY | FASYNC);
 	fcntl(m_fileDescriptor, F_SETOWN, getpid());
 	fcntl(m_fileDescriptor, F_SETFL, O_ASYNC); 
+}
+
+void SerialPort::SendDataRequest() {	
+	uint8_t buffer[6] = {0, 240, 14, 0, 0, 254};
+	write(m_fileDescriptor, buffer, sizeof buffer);
+}
+
+bool SerialPort::IsMessageReceived() {
+	bool message = m_messageReceived;
+	m_messageReceived = false;
+	return message;
+}
+
+std::vector<unsigned int> SerialPort::ReadRXBuffer() {
+	char buf[30] = { 0 };
+	int n = read(m_fileDescriptor, buf, sizeof buf);
+	for (int i = 0; i < n; i++)
+		m_rxBuffer.push_back(buf[i]);
+	return m_rxBuffer;
+}
+
+void SerialPort::FlushRXBuffer() {
+	m_rxBuffer.clear();
+}
+
+SerialPort::~SerialPort() {	
+	ClosePort();
+}
+
+void SerialPort::ClosePort() {
+	close(m_fileDescriptor);
 }

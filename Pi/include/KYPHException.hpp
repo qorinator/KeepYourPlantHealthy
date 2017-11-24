@@ -10,7 +10,7 @@ class OpenFileFailure : public std::exception
 {
 public:
 	char const* msg() const throw() {
-		return "open";
+		return "/dev/ttyACM0";
 	}
 };
 

@@ -17,6 +17,7 @@ public:
 	std::vector<unsigned int> ReadRXBuffer();	
 	void SendDataRequest();
 	bool IsMessageReceived();
+	void FlushRXBuffer();
 private:
 	void OpenPort(const char* filePath);	
 	void ClosePort();
