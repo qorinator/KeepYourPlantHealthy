@@ -1,13 +1,16 @@
 #include <iostream>
 #include <unistd.h>
+#include <vector>
 #include "SerialPort.h"
 #include "MessageDecoder.h"
 #include "ProtocolUnwrapper.h"
+#include "SerialDataHandler.h"
 
 int main(int argc, char *argv[])
 {
 	SerialPort arduinoUSB("/dev/ttyACM0", B115200);
 	std::vector<unsigned int> rxBuffer;
+	std::vector<Package> packages;
 	MessageDecoder decoder;
 	sleep(3);
 	bool send = true;
@@ -19,16 +22,16 @@ int main(int argc, char *argv[])
 		}
 
 		if (arduinoUSB.IsMessageReceived())
-	 	{		 		
+	 	{			
 	 		rxBuffer = arduinoUSB.ReadRXBuffer();
-	 		
 	 		ProtocolUnwrapper* unwrapper = new ProtocolUnwrapper(rxBuffer);
-	 		send = unwrapper->IsMessageComplete();
-	 		if(send)	 			
+	 		packages = unwrapper->GetPackages();
+	 		if(!packages.empty()) {	 			 		
 	 			arduinoUSB.FlushRXBuffer();
+	 			send = true;
+	 		}
 	 		delete unwrapper;
-	 		
-	 		// decoder.DecodeSerialPortMessage(rxBuffer);
+	 		unwrapper = nullptr;	 		
 	 	}
 	 	sleep(2);
 	 }
