@@ -5,6 +5,7 @@
 #include "MessageDecoder.h"
 #include "ProtocolUnwrapper.h"
 #include "SerialDataHandler.h"
+#include "KYPHSensors.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,12 +22,16 @@ int main(int argc, char *argv[])
 			send = false;
 		}
 
-		if (arduinoUSB.IsMessageReceived())
-	 	{			
+		if (arduinoUSB.IsMessageReceived()) {			
 	 		rxBuffer = arduinoUSB.ReadRXBuffer();
+
 	 		ProtocolUnwrapper* unwrapper = new ProtocolUnwrapper(rxBuffer);
 	 		packages = unwrapper->GetPackages();
-	 		if(!packages.empty()) {	 			 		
+	 		if(!packages.empty()) {
+	 			// convert packages to sensor values
+	 			KYPHSensors sensors(packages);
+	 			// send sensor values to MySQL database
+
 	 			arduinoUSB.FlushRXBuffer();
 	 			send = true;
 	 		}

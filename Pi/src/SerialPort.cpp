@@ -13,42 +13,42 @@ void SerialPort::SerialPortSignalHandler(int status) {
 }
 
 SerialPort::SerialPort(const char* filePath, int baudrate)
-	: m_baudrate(baudrate) 
+	: _baudrate(baudrate) 
 {
 	try{
 		OpenPort(filePath);
 		ConfigurePortInterrupt();
-		ConfigureSerialPort(m_tty, m_fileDescriptor, m_baudrate);
+		ConfigureSerialPort(_tty, _fileDescriptor, _baudrate);
 	}
-	catch(OpenFileFailure& e){
+	catch(ConfigureTerminalFailure& e){
 		perror(e.msg());
 		exit(EXIT_FAILURE);
 	}
 }
 
 void SerialPort::OpenPort(const char* filePath) {	
-	m_fileDescriptor = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY);
+	_fileDescriptor = open(filePath, O_RDWR | O_NOCTTY | O_NDELAY);
 	if(!IsPortOpen())
-		throw OpenFileFailure();
+		throw ConfigureTerminalFailure(filePath);
 }
 
 bool SerialPort::IsPortOpen() {
-	return (m_fileDescriptor != -1);
+	return (_fileDescriptor != -1);
 }
 
 void SerialPort::ConfigurePortInterrupt() {
-	m_saio.sa_handler = SerialPortSignalHandler;
-	m_saio.sa_flags = 0;
-	m_saio.sa_restorer = NULL;
-	sigaction(SIGIO, &m_saio, NULL);	
-	fcntl(m_fileDescriptor, F_SETFL, FNDELAY | FASYNC);
-	fcntl(m_fileDescriptor, F_SETOWN, getpid());
-	fcntl(m_fileDescriptor, F_SETFL, O_ASYNC); 
+	_saio.sa_handler = SerialPortSignalHandler;
+	_saio.sa_flags = 0;
+	_saio.sa_restorer = NULL;
+	sigaction(SIGIO, &_saio, NULL);	
+	fcntl(_fileDescriptor, F_SETFL, FNDELAY | FASYNC);
+	fcntl(_fileDescriptor, F_SETOWN, getpid());
+	fcntl(_fileDescriptor, F_SETFL, O_ASYNC); 
 }
 
 void SerialPort::SendDataRequest() {	
 	uint8_t buffer[6] = {0, 240, 14, 0, 0, 254};
-	write(m_fileDescriptor, buffer, sizeof buffer);
+	write(_fileDescriptor, buffer, sizeof buffer);
 }
 
 bool SerialPort::IsMessageReceived() {
@@ -59,14 +59,14 @@ bool SerialPort::IsMessageReceived() {
 
 std::vector<unsigned int> SerialPort::ReadRXBuffer() {
 	char buf[30] = { 0 };
-	int n = read(m_fileDescriptor, buf, sizeof buf);
+	int n = read(_fileDescriptor, buf, sizeof buf);
 	for (int i = 0; i < n; i++)
-		m_rxBuffer.push_back(buf[i]);
-	return m_rxBuffer;
+		_rxBuffer.push_back(buf[i]);
+	return _rxBuffer;
 }
 
 void SerialPort::FlushRXBuffer() {
-	m_rxBuffer.clear();
+	_rxBuffer.clear();
 }
 
 SerialPort::~SerialPort() {	
@@ -74,5 +74,5 @@ SerialPort::~SerialPort() {
 }
 
 void SerialPort::ClosePort() {
-	close(m_fileDescriptor);
+	close(_fileDescriptor);
 }

@@ -24,11 +24,11 @@ private:
 	bool IsPortOpen();	
 	void ConfigurePortInterrupt();
 private:	
-	int							m_fileDescriptor;
-	struct termios				m_tty;
-	struct sigaction			m_saio;
-	speed_t						m_baudrate;
-	std::vector<unsigned int>	m_rxBuffer;	
+	int	_fileDescriptor;
+	struct termios				_tty;
+	struct sigaction			_saio;
+	speed_t						_baudrate;
+	std::vector<unsigned int>	_rxBuffer;	
 };
 
 #endif // SERIALPORT_H

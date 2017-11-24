@@ -33,8 +33,7 @@ void ProtocolUnwrapper::RepackageMessage(std::vector<unsigned int> const& rxBuff
 				package.SetData(data);
 				break;
 		}
-	}
-	package.PrintPackage();
+	}	
 	_packages.push_back(package);
 }
 

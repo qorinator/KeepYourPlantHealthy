@@ -12,6 +12,7 @@ add_executable(KeepYourPlantHealhyExecutable
 	ProtocolUnwrapper.cpp
 	Package.cpp
 	SerialDataHandler.cpp
+	KYPHSensors.cpp
 	MessageDecoder.cpp
 )
 
