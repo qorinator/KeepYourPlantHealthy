@@ -3,6 +3,12 @@ set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
 
 # Tell CMake that we need the header files in these directories
 include_directories("../include")
+include_directories("/usr/include/mysql")
+
+# Create a variable that holds the location of the library
+find_library(MYSQL_LIBRARY
+	NAMES "mysqlclient"
+	PATHS "/usr/include/mysql")
 
 # Create executables out of the associated .cpp files
 add_executable(KeepYourPlantHealhyExecutable
@@ -13,6 +19,8 @@ add_executable(KeepYourPlantHealhyExecutable
 	Package.cpp
 	SerialDataHandler.cpp
 	KYPHSensors.cpp
-	MessageDecoder.cpp
+	SQLInterface.cpp
 )
 
+# Tell Cmake to link theses executables with the library
+target_link_libraries(KeepYourPlantHealhyExecutable ${MYSQL_LIBRARY})

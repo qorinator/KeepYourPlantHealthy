@@ -1,18 +1,19 @@
 #include <iostream>
 #include <unistd.h>
 #include <vector>
+
 #include "SerialPort.h"
-#include "MessageDecoder.h"
 #include "ProtocolUnwrapper.h"
 #include "SerialDataHandler.h"
 #include "KYPHSensors.h"
+#include "LocalTime.hpp"
+#include "SQLInterface.h"
 
 int main(int argc, char *argv[])
 {
 	SerialPort arduinoUSB("/dev/ttyACM0", B115200);
 	std::vector<unsigned int> rxBuffer;
 	std::vector<Package> packages;
-	MessageDecoder decoder;
 	sleep(3);
 	bool send = true;
 	while (1) {
@@ -29,8 +30,10 @@ int main(int argc, char *argv[])
 	 		packages = unwrapper->GetPackages();
 	 		if(!packages.empty()) {
 	 			// convert packages to sensor values
+	 			LocalTime localtime;
 	 			KYPHSensors sensors(packages);
 	 			// send sensor values to MySQL database
+	 			SQLInterface mySql(localtime.Get(), sensors);
 
 	 			arduinoUSB.FlushRXBuffer();
 	 			send = true;
@@ -38,7 +41,7 @@ int main(int argc, char *argv[])
 	 		delete unwrapper;
 	 		unwrapper = nullptr;	 		
 	 	}
-	 	sleep(2);
+	 	sleep(10);
 	 }
 	return 0;	
 }
