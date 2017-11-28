@@ -14,9 +14,14 @@ public:
 	SQLInterface(std::string const& time, KYPHSensors const& sensors);
 	~SQLInterface();
 private:
+	bool InitializeSensorsValueDatabase();
 	bool ConnectToMySQL();
-	bool ConnectToSensorValueDatabase();
-	void DoSomething(std::string const& time, KYPHSensors const& sensors);
+	bool ConnectToSensorValueDatabase();	
+	void AppendSensorsValueToTable(std::string const& time, KYPHSensors const& sensors);
+	bool SendSQLQuery(std::string msg);
+	std::string ToSQLString(int value);
+	std::string ToSQLString(float value);
+	std::string ToSQLString(std::string value);
 private:
 	MYSQL* _mysqlConnection;
 	const char* _server = "localhost";

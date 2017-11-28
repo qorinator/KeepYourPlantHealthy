@@ -1,19 +1,20 @@
 #include "SQLInterface.h"
 
-SQLInterface::~SQLInterface() {
+SQLInterface::~SQLInterface() 
+{
 	mysql_close(_mysqlConnection);
-	std::cout << "closing my sql" << std::endl;
 }
 
 SQLInterface::SQLInterface(std::string const& time, KYPHSensors const& sensors)
 {	
-	if(ConnectToMySQL()){
-		if(ConnectToSensorValueDatabase()){
-			DoSomething(time, sensors);
-		}
-		else
-			std::cout << "connection is not successfull ?? " << std::endl;
-	}
+	if(InitializeSensorsValueDatabase())
+		AppendSensorsValueToTable(time, sensors);
+	else
+		std::cout << "Error : unable to initialize connection to database." << std::endl;	
+}
+
+bool SQLInterface::InitializeSensorsValueDatabase() {
+	return (ConnectToMySQL() && ConnectToSensorValueDatabase());
 }
 
 bool SQLInterface::ConnectToMySQL() {
@@ -29,17 +30,32 @@ bool SQLInterface::ConnectToSensorValueDatabase() {
 		_mysqlConnection, _server, _user, _password , _database , 0, NULL, 0) != NULL);
 }
 
-void SQLInterface::DoSomething(std::string const& time, KYPHSensors const& sensors) {
-	std::string _time 			= "'" + time + "'";
-	std::string temperature 	= "'" + std::to_string(sensors.GetTemperature()) + "'";
-	std::string humidity 		= "'" + std::to_string(sensors.GetHumidity()) + "'";
-	std::string soilMoisture 	= "'" + std::to_string(sensors.GetSoilMoisture()) + "'";
-	std::string uv 				= "'" + std::to_string(sensors.GetUVLevel()) + "'";
-	std::string msg = "INSERT INTO DailyMeasurement (datetime, temperature, humidity, moisture, uv) VALUES (" +
-				 _time + ", " + temperature + ", " + humidity + ", " + soilMoisture + ", " + uv + ");";
-	if(mysql_query(_mysqlConnection, msg.c_str()) != NULL)
-		std::cout << "unable to insert" << std::endl;
-	else
-		std::cout << "insert is successfull" << std::endl;
-	std::cout << "field count " << mysql_field_count(_mysqlConnection) << std::endl;
+void SQLInterface::AppendSensorsValueToTable(std::string const& time, KYPHSensors const& sensors) {
+	std::string _time 			= ToSQLString(time);
+	std::string temperature 	= ToSQLString(sensors.GetTemperature());
+	std::string humidity 		= ToSQLString(sensors.GetHumidity());
+	std::string soilMoisture 	= ToSQLString(sensors.GetSoilMoisture());
+	std::string uv 				= ToSQLString(sensors.GetUVLevel());
+	std::string msg = "INSERT INTO DailyMeasurement (datetime, temperature, humidity, moisture, uv) VALUES ("
+					   + _time + ", " 
+					   + temperature + ", " 
+					   + humidity + ", " 
+					   + soilMoisture + ", " 
+					   + uv + ");";
+	if(!SendSQLQuery(msg))		
+		std::cout << "Error : unable to send MySQL querry" << std::endl;
+}
+
+bool SQLInterface::SendSQLQuery(std::string msg) {
+	return mysql_query(_mysqlConnection, msg.c_str()) == 0;
+}
+
+std::string SQLInterface::ToSQLString(int value) {
+	return ("'" + std::to_string(value) + "'");
+}
+std::string SQLInterface::ToSQLString(float value) {
+	return ("'" + std::to_string(value) + "'");
+}
+std::string SQLInterface::ToSQLString(std::string value) {
+	return ("'" + value + "'");	
 }

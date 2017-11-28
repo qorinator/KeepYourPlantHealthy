@@ -16,32 +16,28 @@ int main(int argc, char *argv[])
 	std::vector<Package> packages;
 	sleep(3);
 	bool send = true;
-	while (1) {
-		if(send) {
-			std::cout << "===============================" << std::endl; 
-			arduinoUSB.SendDataRequest();
-			send = false;
+	bool receive = false;
+	while (!receive) {
+		if(send) {			
+			arduinoUSB.SendDataRequest();				
+			send = false;		
 		}
-
-		if (arduinoUSB.IsMessageReceived()) {			
+		if (arduinoUSB.IsMessageReceived()) {	
 	 		rxBuffer = arduinoUSB.ReadRXBuffer();
 
 	 		ProtocolUnwrapper* unwrapper = new ProtocolUnwrapper(rxBuffer);
 	 		packages = unwrapper->GetPackages();
 	 		if(!packages.empty()) {
-	 			// convert packages to sensor values
 	 			LocalTime localtime;
-	 			KYPHSensors sensors(packages);
-	 			// send sensor values to MySQL database
+	 			KYPHSensors sensors(packages);	 			
 	 			SQLInterface mySql(localtime.Get(), sensors);
-
 	 			arduinoUSB.FlushRXBuffer();
-	 			send = true;
+	 			receive = true;
 	 		}
 	 		delete unwrapper;
-	 		unwrapper = nullptr;	 		
+	 		unwrapper = nullptr;
 	 	}
-	 	sleep(10);
+	 	sleep(2);
 	 }
 	return 0;	
 }

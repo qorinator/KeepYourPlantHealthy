@@ -11,8 +11,8 @@ find_library(MYSQL_LIBRARY
 	PATHS "/usr/include/mysql")
 
 # Create executables out of the associated .cpp files
-add_executable(KeepYourPlantHealhyExecutable
-	KeepYourPlantHealthy.cpp	
+add_executable(DailyMeasurement
+	DailyMeasurement.cpp	
 	SerialPort.cpp
 	SPConfigure.cpp
 	ProtocolUnwrapper.cpp
@@ -23,4 +23,4 @@ add_executable(KeepYourPlantHealhyExecutable
 )
 
 # Tell Cmake to link theses executables with the library
-target_link_libraries(KeepYourPlantHealhyExecutable ${MYSQL_LIBRARY})
+target_link_libraries(DailyMeasurement ${MYSQL_LIBRARY})

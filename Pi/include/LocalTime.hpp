@@ -20,7 +20,7 @@ inline LocalTime::LocalTime() {
 	struct tm* timeinfo;
 	timeinfo = localtime(&rawtime);
 	char buffer[80];	
-	strftime(buffer,sizeof(buffer),"%Y-%m-%d %I:%M:%S",timeinfo);
+	strftime(buffer,sizeof(buffer),"%Y-%m-%d %H:%M:%S",timeinfo);
 	_time = std::string(buffer);
 }
 
