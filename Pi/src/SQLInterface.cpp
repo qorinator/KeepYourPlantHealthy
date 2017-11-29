@@ -5,12 +5,18 @@ SQLInterface::~SQLInterface()
 	mysql_close(_mysqlConnection);
 }
 
+SQLInterface::SQLInterface() 
+{
+	if(!InitializeSensorsValueDatabase())
+		std::cout << "Error : unable to initialize connection to database." << std::endl;
+}
+
 SQLInterface::SQLInterface(std::string const& time, KYPHSensors const& sensors)
 {	
 	if(InitializeSensorsValueDatabase())
 		AppendSensorsValueToTable(time, sensors);
 	else
-		std::cout << "Error : unable to initialize connection to database." << std::endl;	
+		std::cout << "Error : unable to initialize connection to database." << std::endl;
 }
 
 bool SQLInterface::InitializeSensorsValueDatabase() {
@@ -42,6 +48,12 @@ void SQLInterface::AppendSensorsValueToTable(std::string const& time, KYPHSensor
 					   + humidity + ", " 
 					   + soilMoisture + ", " 
 					   + uv + ");";
+	if(!SendSQLQuery(msg))		
+		std::cout << "Error : unable to send MySQL querry" << std::endl;
+}
+
+void SQLInterface::TruncateDailyMeasurementQuery() {
+	std::string msg = "TRUNCATE DailyMeasurement;";
 	if(!SendSQLQuery(msg))		
 		std::cout << "Error : unable to send MySQL querry" << std::endl;
 }

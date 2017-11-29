@@ -11,8 +11,17 @@
 class SQLInterface
 {
 public:
+	enum class Databases
+	{
+		DailyMeasurement,
+		WeeklyMeasurement,
+		MonthlyMeasurement,
+		YearlyMeasurement
+	};
 	SQLInterface(std::string const& time, KYPHSensors const& sensors);
+	SQLInterface();
 	~SQLInterface();
+	void TruncateDailyMeasurementQuery();
 private:
 	bool InitializeSensorsValueDatabase();
 	bool ConnectToMySQL();

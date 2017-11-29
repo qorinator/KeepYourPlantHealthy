@@ -22,5 +22,21 @@ add_executable(DailyMeasurement
 	SQLInterface.cpp
 )
 
+add_executable(WeeklyMeasurement
+	WeeklyMeasurement.cpp
+	SQLInterface.cpp
+	KYPHSensors.cpp
+	Package.cpp
+)
+
+add_executable(ClearDailyMeasurement
+	ClearDailyMeasurement.cpp
+	SQLInterface.cpp
+	KYPHSensors.cpp
+	Package.cpp
+)
+
 # Tell Cmake to link theses executables with the library
 target_link_libraries(DailyMeasurement ${MYSQL_LIBRARY})
+target_link_libraries(WeeklyMeasurement ${MYSQL_LIBRARY})
+target_link_libraries(ClearDailyMeasurement ${MYSQL_LIBRARY})
