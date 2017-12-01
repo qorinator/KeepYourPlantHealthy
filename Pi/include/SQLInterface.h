@@ -11,28 +11,18 @@
 class SQLInterface
 {
 public:
-	enum class Databases
-	{
-		DailyMeasurement,
-		WeeklyMeasurement,
-		MonthlyMeasurement,
-		YearlyMeasurement
-	};
-	SQLInterface(std::string const& time, KYPHSensors const& sensors);
 	SQLInterface();
-	~SQLInterface();
-	void TruncateDailyMeasurementQuery();
+	virtual ~SQLInterface() = 0;
+	virtual void GetAction(std::string const& msg) = 0;		
 private:
 	bool InitializeSensorsValueDatabase();
 	bool ConnectToMySQL();
-	bool ConnectToSensorValueDatabase();	
-	void AppendSensorsValueToTable(std::string const& time, KYPHSensors const& sensors);
+	bool ConnectToSensorValueDatabase();
+protected:
 	bool SendSQLQuery(std::string msg);
-	std::string ToSQLString(int value);
-	std::string ToSQLString(float value);
-	std::string ToSQLString(std::string value);
-private:
+protected:
 	MYSQL* _mysqlConnection;
+private:
 	const char* _server = "localhost";
 	const char* _user = "kyph";
 	const char* _password = "kyph";

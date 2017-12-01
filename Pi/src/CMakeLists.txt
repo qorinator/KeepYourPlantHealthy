@@ -11,32 +11,37 @@ find_library(MYSQL_LIBRARY
 	PATHS "/usr/include/mysql")
 
 # Create executables out of the associated .cpp files
-add_executable(DailyMeasurement
-	DailyMeasurement.cpp	
+add_executable(UpdateDailyMeasurement
+	UpdateDailyMeasurement.cpp
+	ArduinoHandler.cpp
 	SerialPort.cpp
 	SPConfigure.cpp
 	ProtocolUnwrapper.cpp
-	Package.cpp
+	PackagesToSQLQuerry.cpp
 	SerialDataHandler.cpp
+	Package.cpp
 	KYPHSensors.cpp
 	SQLInterface.cpp
+	SQLInsert.cpp
 )
 
-add_executable(WeeklyMeasurement
-	WeeklyMeasurement.cpp
-	SQLInterface.cpp
-	KYPHSensors.cpp
-	Package.cpp
+add_executable(StoreSensorMeasurement
+ 	StoreSensorMeasurement.cpp
+ 	SQLInterface.cpp
+ 	SQLUpdate.cpp
+ 	KYPHSensors.cpp
+ 	Package.cpp
 )
 
 add_executable(ClearDailyMeasurement
 	ClearDailyMeasurement.cpp
 	SQLInterface.cpp
+	SQLTruncate.cpp
 	KYPHSensors.cpp
 	Package.cpp
 )
 
 # Tell Cmake to link theses executables with the library
-target_link_libraries(DailyMeasurement ${MYSQL_LIBRARY})
-target_link_libraries(WeeklyMeasurement ${MYSQL_LIBRARY})
+target_link_libraries(UpdateDailyMeasurement ${MYSQL_LIBRARY})
+target_link_libraries(StoreSensorMeasurement ${MYSQL_LIBRARY})
 target_link_libraries(ClearDailyMeasurement ${MYSQL_LIBRARY})

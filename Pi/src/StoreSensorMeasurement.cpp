@@ -1,10 +1,10 @@
 #include "SQLInterface.h"
-#include "SQLTruncate.h"
+#include "SQLUpdate.h"
 
 #include <iostream>
 
 int main(int argc, char *argv[]) {	
-	SQLInterface* mySQL = new SQLTruncate();
+	SQLInterface* mySQL = new SQLUpdate();
 	mySQL->GetAction("DailyMeasurement");
 	delete mySQL;
 	mySQL = nullptr;

@@ -1,5 +1,4 @@
 #include "ProtocolUnwrapper.h"
-#include <iostream>
 
 ProtocolUnwrapper::~ProtocolUnwrapper() {}
 

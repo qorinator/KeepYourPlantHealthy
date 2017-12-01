@@ -27,10 +27,12 @@ int main(int argc, char *argv[])
 
 	 		ProtocolUnwrapper* unwrapper = new ProtocolUnwrapper(rxBuffer);
 	 		packages = unwrapper->GetPackages();
+	 		
 	 		if(!packages.empty()) {
 	 			LocalTime localtime;
 	 			KYPHSensors sensors(packages);	 			
-	 			SQLInterface mySql(localtime.Get(), sensors);
+	 			SQLInterface mySql;
+	 			mySql.AppendSensorsValueToTable(localtime.Get(), sensors);
 	 			arduinoUSB.FlushRXBuffer();
 	 			receive = true;
 	 		}

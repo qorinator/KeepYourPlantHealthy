@@ -5,7 +5,6 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
-#include <iostream>
 
 bool SerialPort::m_messageReceived = false;
 void SerialPort::SerialPortSignalHandler(int status) {
