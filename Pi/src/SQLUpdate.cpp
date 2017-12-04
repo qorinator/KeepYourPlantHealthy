@@ -1,5 +1,8 @@
 #include "SQLUpdate.h"
 
+std::string const SQLUpdate::SensorTables[4] = {"TemperatureMeasurement", "HumidityMeasurement",
+									 			"MoistureMeasurement", "UVMeasurement"};
+
 SQLUpdate::SQLUpdate() {}
 
 void SQLUpdate::GetAction(std::string const& msg) {
@@ -14,18 +17,12 @@ void SQLUpdate::StoreSensorMeasurement(std::string const& msg) {
 
 	results = mysql_store_result(_mysqlConnection);	
 	while(GetRow(results, row)) {
-		std::string date = row[0];
-		std::string temperature = row[1];
-		std::string humidity = row[2];
-		std::string soilMoisture = row[3];
-		std::string uv = row[4];
-
-		std::cout << date << " |\t" << temperature << " |\t" 
-		<< humidity << " |\t" << soilMoisture << " |\t" << uv;
-		// std::cout << " |\t";
-		// for(unsigned int i = 0; i < num_fields; i++)
-		// 	std::cout << row[i] << "\t|\t";
-		std::cout << std::endl;
+		std::string query;
+		for(unsigned int i = 1; i < num_fields; i++) {
+			query = "INSERT INTO " + SensorTables[i-1] + " (date, value) VALUES ('" + row[0] + "', '" + row[i] + "'); ";
+			if(!SendSQLQuery(query))		
+				std::cout << "Error : unable to send MySQL querry" << std::endl;
+		}
 	}
 }
 

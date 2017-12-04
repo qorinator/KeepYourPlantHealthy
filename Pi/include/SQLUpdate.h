@@ -12,6 +12,8 @@ private:
 	void StoreSensorMeasurement(std::string const& msg);
 	void GetTableFromDatabase(std::string const& msg);
 	bool GetRow(MYSQL_RES* results, MYSQL_ROW& row);
+private:
+	static std::string const SensorTables[4];
 };
 
 #endif // SQLUPDATE_H
