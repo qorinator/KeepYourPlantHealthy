@@ -1,0 +1,30 @@
+
+.icon-chevron {
+	display:block;
+	width:15px;
+	height:22px;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAWCAMAAAAo0TYrAAAAElBMVEX///8AAAAAAAAAAAAAAAAAAABknMCaAAAABXRSTlMAEHCg0O5XV0MAAAAzSURBVHgBYwACJkYGZMDMysKIwmUFCyC4KAIsrKgCjPQQQPCpzUX4B9O/mOGBGV7o4QkA5zcCv3HiEZgAAAAASUVORK5CYII=);
+}
+
+.icon-chevron-rotate {
+	transform: rotate(180deg);
+}
+
+.page {
+  width: 500px;
+  margin: 0 auto;  
+}
+
+.responsive-calendar .controls {
+	text-align: center;
+}
+
+.responsive-calendar .controls a {
+  cursor: pointer;
+  color: red;
+}
+
+.responsive-calendar .controls h4 {
+  display: inline;
+}
+
