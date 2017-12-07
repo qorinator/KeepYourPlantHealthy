@@ -17,18 +17,21 @@ add_executable(UpdateDailyMeasurement
 	SerialPort.cpp
 	SPConfigure.cpp
 	ProtocolUnwrapper.cpp
-	PackagesToSQLQuerry.cpp
 	SerialDataHandler.cpp
 	Package.cpp
 	KYPHSensors.cpp
+	SQLQuery.cpp
 	SQLInterface.cpp
 	SQLInsert.cpp
+	SQLObject.cpp
 )
 
 add_executable(StoreSensorMeasurement
  	StoreSensorMeasurement.cpp
  	SQLInterface.cpp
  	SQLUpdate.cpp
+ 	SQLObject.cpp
+ 	SQLQuery.cpp
  	KYPHSensors.cpp
  	Package.cpp
 )
