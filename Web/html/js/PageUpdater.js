@@ -3,6 +3,7 @@ var PageUpdater = {};
 PageUpdater.fileName = $('script[src*=PageUpdater]');
 PageUpdater.choice = PageUpdater.fileName.attr('data-caller');
 
+var x = 0;
 
 window.onload = function() {	
 	ContentUpdater.UpdateDateDisplay();

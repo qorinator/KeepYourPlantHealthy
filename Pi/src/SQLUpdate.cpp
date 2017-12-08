@@ -4,7 +4,7 @@
 
 std::string const SQLUpdate::SensorTables[NumberOfSensors] = {"temperature",
 															  "humidity",
-															  "moisture",
+															  "soilmoisture",
 															  "uv"};
 
 SQLUpdate::SQLUpdate()
@@ -35,23 +35,36 @@ void SQLUpdate::StoreSensorMeasurement(std::string const& msg) {
 		for(unsigned int i = 0; i < NumberOfSensors; i++) {					
 			InitializeData(i, row);
 			GetNewData(i);
-			if(GetElapsedMinute(row[0]) >= (12 * 60 + 00)){	
-				SQLQuery* converter = new SQLQuery(_objects[i]);
-				std::cout << converter->GetQuery() << std::endl;
-				if(!SendSQLQuery(converter->GetQuery()))
-					std::cout << "Error : unable to send MySQL querry" << std::endl;
-				delete converter;
-				converter = nullptr;
-			}			
+			if(GetElapsedMinute(row[0]) >= (23 * 60 + 45)){	
+				GetTableFromDatabase(_objects[i].GetName());
+
+				MYSQL_RES* resultsPrev = mysql_store_result(_mysqlConnection);
+				MYSQL_ROW rowPrev;
+
+				bool dataExists = false;
+				
+				while(GetRow(resultsPrev, rowPrev)) {
+					if(GetDate(rowPrev[0]) == _objects[i].GetDate()) 
+						dataExists = true;
+				}
+				if(!dataExists){
+					SQLQuery* converter = new SQLQuery(_objects[i]);
+					// std::cout << converter->GetQuery() << std::endl;
+					if(!SendSQLQuery(converter->GetQuery()))
+						std::cout << "Error : unable to send MySQL querry" << std::endl;
+					delete converter;
+					converter = nullptr;
+				}
+			}
 		}
 		_occurance++;
 	}
 }
 
 void SQLUpdate::GetTableFromDatabase(std::string const& msg) {
-	std::string query = "SELECT * from " + msg + ";";
+	std::string query = "SELECT * FROM " + msg + ";";
 	if(!SendSQLQuery(query))
-		std::cout << "Error : unable to send MySQL querry" << std::endl;
+		std::cout << "Error : unable to send "  << query << std::endl;
 }
 
 bool SQLUpdate::GetRow(MYSQL_RES* results, MYSQL_ROW& row) {

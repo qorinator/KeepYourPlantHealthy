@@ -1,21 +1,26 @@
 var ContentUpdater = {};
 
 ContentUpdater.Update = function (select) {
-	ContentUpdater.UpdateDateDisplay();
+	ContentUpdater.UpdateDateDisplay(select);
 	ContentUpdater.UpdateChart(select);
 }
 
-ContentUpdater.UpdateDateDisplay = function() {
-	document.getElementById('dateDisplay').innerHTML = DateUpdater.GetDisplay();
+ContentUpdater.UpdateDateDisplay = function(select) {
+	switch(select) {
+		case "Daily":			
+			document.getElementById('dateDisplay').innerHTML = DateUpdater.GetDisplay();
+			break;		
+	}
+	
 };
 
 ContentUpdater.UpdateChart = function(select) {	
 	switch(select) {
 		case "Daily":			
 			ChartUpdater.Update();
-		break;
+			break;
 		case "Weekly":
-			console.log("Weekly update");
-		break;
+			SensorChartUpdater.Update();			
+			break;
 	}
 };

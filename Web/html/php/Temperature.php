@@ -7,7 +7,6 @@
 	$username = "kyph";
 	$password = "kyph";
 	$database = "SensorsValueDatabase";
-	$table = "DailyMeasurement";
 
 	// Get Connection
 	try {
@@ -19,7 +18,7 @@
 	}
 
 	// Query to get data from the table
-	$query="SELECT * FROM HumidityMeasurement";
+	$query="SELECT * FROM temperature";
 
 	// Execute querry
 	$result=$conn->query($query);	
@@ -29,8 +28,10 @@
 	$i=0;
 	foreach ($conn->query($query) as $row) {
 		$sqlarray = array();
-		$sqlarray["Time"] = $row['date'];
-		$sqlarray["Humidity"] = $row['value'];
+		$sqlarray["Date"] = $row['date'];
+		$sqlarray["Average"] = $row['average'];
+		$sqlarray["Minimum"] = $row['minimum'];
+		$sqlarray["Maximum"] = $row['maximum'];		
 		
 		$jsonarray[$i] = $sqlarray;
 		$i++;

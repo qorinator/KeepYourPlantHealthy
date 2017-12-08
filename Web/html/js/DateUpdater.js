@@ -38,8 +38,10 @@ DateUpdater.IncreaseWeek = function() {
 		DateUpdater.current.setDate(DateUpdater.todayDate.getDate());
 	else
 		DateUpdater.current.setDate(DateUpdater.current.getDate() + 7);
+	NextWeek();
 };
 
 DateUpdater.DecreaseWeek = function() {
-		DateUpdater.current.setDate(DateUpdater.current.getDate() - 7);
+	DateUpdater.current.setDate(DateUpdater.current.getDate() - 7);
+	PreviousWeek();
 };

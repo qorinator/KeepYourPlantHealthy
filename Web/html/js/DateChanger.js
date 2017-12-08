@@ -17,12 +17,18 @@ function DisplayWeek(date) {
 function GetFirstDayOfTheWeek(date) {
 	var curr = new Date(date);
 	var first = curr.getDate() - curr.getDay();
+	curr.setHours(0);
+	curr.setMinutes(0);
+	curr.setSeconds(0);
 	return new Date(curr.setDate(first))
 }
 
 function GetLastDayOfTheWeek(date) {	
 	var first = new Date(GetFirstDayOfTheWeek(date));
 	var last = first.getDate() + 6;
+	first.setHours(0);
+	first.setMinutes(0);
+	first.setSeconds(1);
 	return new Date(first.setDate(last));
 }
 

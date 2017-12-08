@@ -72,7 +72,8 @@ ChartUpdater.ConvertJSONToDateTimeObject  = function (time) {
 	var dateTimeArray = time.split(" ");
 	var dateArray = dateTimeArray[0].split("-");
 	var timeArray = dateTimeArray[1].split(":");
-	return new Date(Number(dateArray[0]), Number(dateArray[1]), Number(dateArray[2]), Number(timeArray[0]), Number(timeArray[1]))
+	return new Date(Number(dateArray[0]), Number(dateArray[1])-1, Number(dateArray[2]), 
+					Number(timeArray[0]), Number(timeArray[1]), Number(1));
 };
 
 ChartUpdater.DrawChart = function(chartData, className) {
@@ -83,11 +84,11 @@ ChartUpdater.DrawChart = function(chartData, className) {
 			gridlines: {color: '#333', count: 8},
 			minorGridlines: {count: 2},
 			maxValue: new Date(DateUpdater.current.getFullYear(), 
-							   (DateUpdater.current.getMonth()+1), 
+							   (DateUpdater.current.getMonth()), 
 							    DateUpdater.current.getDate(), 
 								23, 59, 59),
 			minValue: new Date(DateUpdater.current.getFullYear(), 
-							   (DateUpdater.current.getMonth()+1), 
+							   (DateUpdater.current.getMonth()), 
 							    DateUpdater.current.getDate(), 
 								0, 0, 0)
 		},

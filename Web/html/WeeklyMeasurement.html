@@ -18,6 +18,7 @@
 	<script type="text/javascript" src="/html/js/ContentUpdater.js"> </script>
 	<script type="text/javascript" src="/html/js/DateUpdater.js"> </script>
 	<script type="text/javascript" src="/html/js/ChartUpdater.js"> </script>
+	<script type="text/javascript" src="/html/js/SensorChartUpdater.js"> </script>
 
 	<script type="text/javascript" src="/html/js/DateChanger.js"> </script>
 </head>
@@ -27,15 +28,26 @@
 		<div class="responsive-calendar">
 	    	<div class="controls">
 		        <a class="pull-left" data-go="prev">
-		        	<div class="btn" onclick="PreviousWeek()"><i class="icon-chevron icon-chevron-rotate"></i></div>
+		        	<div class="btn" onclick="PageUpdater.PreviousWeek()"><i class="icon-chevron icon-chevron-rotate"></i></div>
 		        </a>
 		        <h4><span id="weekDisplay"> </span></h4>
 		        <a class="pull-right" data-go="next">
-		        	<div class="btn" onclick="NextWeek()"><i class="icon-chevron"></i></div>
+		        	<div class="btn" onclick="PageUpdater.NextWeek()"><i class="icon-chevron"></i></div>
 		        </a>
 		    </div>		
 		</div>
 	</div>
+	<div class="container-fluid">
+		<div id="row1" >
+			<div id="SoilMoisture" class = "col-sm-6 chart"></div>
+			<div id="Temperature" class = "col-sm-6 chart"></div>
+		</div>
+		<div id="row2">
+			<div id="Humidity" class = "col-sm-6 chart"></div>
+			<div id="UV" class = "col-sm-6 chart"></div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
 </body>
 </html>
 

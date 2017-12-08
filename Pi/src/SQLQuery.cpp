@@ -31,12 +31,12 @@ void SQLQuery::ConvertPackageToInsertDailySummaryQuery(std::vector<Package> cons
 
 void SQLQuery::ConvertSQLObectToSQLQuery(SQLObject const& object) {
 	std::string date 	= ToSQLString(object.GetDate());
-	std::string name 	= ToSQLString(object.GetName());
+	std::string name 	= object.GetName();
 	std::string average = ToSQLString(object.GetAverage());
 	std::string minimum = ToSQLString(object.GetMinimum());
 	std::string maximum = ToSQLString(object.GetMaximum());
 
-	_query = "INSERT INTO " + name + " (datetime, average, minimum, maximum) VALUES ("
+	_query = "INSERT INTO " + name + " (date, average, minimum, maximum) VALUES ("
 	  		 + date + ", " 
 			 + average + ", " 
 			 + minimum + ", " 			 
