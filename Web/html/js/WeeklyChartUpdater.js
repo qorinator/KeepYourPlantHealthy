@@ -27,11 +27,12 @@ SensorChartUpdater.GetChartData = function (jsonData) {
 	data.addColumn('number', 'Average');
 	data.addColumn({type: 'string', role:'tooltip'}); 
 	for(var i = 0; i < jsonData.length; i++) {		
-		var t = ChartUpdater.ConvertJSONToDateTimeObject(jsonData[i].Date);	
-		if(t >= GetFirstDayOfTheWeek(currentDisplay) && t <= GetLastDayOfTheWeek(currentDisplay)) {
-			data.addRow([t, Number(jsonData[i].Average), ("ave : " + jsonData[i].Average + 
-														  "\nmin : " + jsonData[i].Minimum + 
-														  "\nmax : " + jsonData[i].Maximum)]);
+		var t = DateJs.ConvertJSONToDateTimeObject(jsonData[i].Date);	
+		if(t >= DateJs.GetFirstDayOfTheWeek(DateUpdater.current) && t <= DateJs.GetLastDayOfTheWeek(DateUpdater.current)) {
+			data.addRow([t, Number(jsonData[i].Average), ("Date : " + DateJs.GetDateFromJSON(jsonData[i].Date) +
+														  "\nAve : " + jsonData[i].Average + 
+														  "\nMin : " + jsonData[i].Minimum + 
+														  "\nMax : " + jsonData[i].Maximum)]);
 		}
 	}
 	return data;
@@ -44,9 +45,8 @@ SensorChartUpdater.DrawChart = function(chartData, className) {
 		backgroundColor: "transparent",
 		hAxis: {
 			gridlines: {color: '#333', count: 6},
-			// minorGridlines: {count: 2},
-			maxValue: GetLastDayOfTheWeek(currentDisplay),
-			minValue: GetFirstDayOfTheWeek(currentDisplay)
+			maxValue: DateJs.GetLastDayOfTheWeek(DateUpdater.current),
+			minValue: DateJs.GetFirstDayOfTheWeek(DateUpdater.current)
 		},
 		vAxis: {
 			title: className

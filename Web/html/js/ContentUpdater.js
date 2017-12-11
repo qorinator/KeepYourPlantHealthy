@@ -8,16 +8,18 @@ ContentUpdater.Update = function (select) {
 ContentUpdater.UpdateDateDisplay = function(select) {
 	switch(select) {
 		case "Daily":			
-			document.getElementById('dateDisplay').innerHTML = DateUpdater.GetDisplay();
-			break;		
-	}
-	
+			DateJs.DisplayDay(DateUpdater.current);
+			break;
+		case "Weekly" :
+			DateJs.DisplayWeek(DateUpdater.current);
+			break;
+	}	
 };
 
 ContentUpdater.UpdateChart = function(select) {	
 	switch(select) {
 		case "Daily":			
-			ChartUpdater.Update();
+			DailyUpdater.Update();
 			break;
 		case "Weekly":
 			SensorChartUpdater.Update();			
