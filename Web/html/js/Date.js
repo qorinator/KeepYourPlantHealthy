@@ -1,9 +1,19 @@
 var DateJs = {};
 
-DateJs.DisplayWeek = function (date) {
+DateJs.DisplayMonth = function () {
+	document.getElementById('monthDisplay').innerHTML = DateJs.GetMonthlyDisplay();
+}
+
+DateJs.GetMonthlyDisplay = function() {
+	var output = DateJs.GetMonthString(DateUpdater.current.getMonth()) + ' ' + 
+				 DateUpdater.current.getFullYear();
+	return output;
+}
+
+DateJs.DisplayWeek = function () {
 	document.getElementById('weekDisplay').innerHTML = 
-			DateJs.GetWeeklyDisplay(DateJs.GetFirstDayOfTheWeek(date), 
-								  DateJs.GetLastDayOfTheWeek(date));
+			DateJs.GetWeeklyDisplay(DateJs.GetFirstDayOfTheWeek(DateUpdater.current), 
+								  DateJs.GetLastDayOfTheWeek(DateUpdater.current));
 }
 
 DateJs.GetWeeklyDisplay = function (first, last) {
@@ -21,7 +31,7 @@ DateJs.GetWeeklyDisplay = function (first, last) {
 	return output;
 }
 
-DateJs.DisplayDay = function (date) {
+DateJs.DisplayDay = function () {
 	document.getElementById('dateDisplay').innerHTML = DateJs.GetDailyDisplay();
 }
 
@@ -34,13 +44,13 @@ DateJs.GetDailyDisplay = function() {
 };
 
 DateJs.GetMonthString = function (month) {
-	var monthNames = ["January", "February", "March", "April", "May", "June",
-					  "July", "August", "September", "October", "November", "December"];	
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+					  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];	
 	return monthNames[month];
 }
 
 DateJs.GetDay = function(day) {
-	var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 	return dayNames[day];
 }
 
@@ -62,6 +72,35 @@ DateJs.GetLastDayOfTheWeek = function (date) {
 	return new Date(first.setDate(last));
 }
 
+DateJs.GetLastDateOfTheMonth = function (date) {	
+	var curr = new Date(date);
+	var last;
+	if(curr.getMonth() < 7) {
+		if((curr.getMonth() % 2) == 0)
+			curr.setDate(31);
+		else {
+			if(curr.getMonth() == 1) {
+				if((curr.getFullYear() % 4) == 0)
+					curr.setDate(29);
+				else
+					curr.setDate(28);
+			}
+			else
+				curr.setDate(30);
+		}
+	}
+	else {
+		if((curr.getMonth() % 2) != 0)
+			curr.setDate(31);
+		else
+			curr.setDate(30);
+
+	}	
+	curr.setHours(0);
+	curr.setMinutes(0);
+	curr.setSeconds(1);
+	return curr;
+}
 
 DateJs.GetDateFromJSON = function (dateTime) {
 	var dateTimeArray = dateTime.split(" ");

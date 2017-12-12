@@ -1,19 +1,19 @@
-var SensorChartUpdater = {};
+var WeeklyUpdater = {};
 
-SensorChartUpdater.Update = function() {
+WeeklyUpdater.Update = function() {
 	for(var i = 0 ; i < Sensor.sensorArray.length; i++) {	
-		GetNextDatabase(Sensor.sensorArray[i]);
+		WeeklyUpdater.UpdateChartWith(Sensor.sensorArray[i]);
 	}
 };
 
-function GetNextDatabase(dataB) {
-	var link = "/html/php/" + dataB + ".php";
+WeeklyUpdater.UpdateChartWith = function (databaseName) {
+	var link = "/html/php/" + databaseName + ".php";
 	var json = $.ajax({				 
 		url: link,
 		dataType: "json",
 		success: function(jsonstring) {	
-			var sensorData = SensorChartUpdater.GetChartData(jsonstring);
-			SensorChartUpdater.DrawChart(sensorData, dataB);
+			var sensorData = WeeklyUpdater.GetChartData(jsonstring);
+			WeeklyUpdater.DrawChart(sensorData, databaseName);
 		},
 		error: function(xhr, status, error) {					
 			alert(error);
@@ -21,7 +21,7 @@ function GetNextDatabase(dataB) {
 	}).responseText;			
 };
 
-SensorChartUpdater.GetChartData = function (jsonData) {
+WeeklyUpdater.GetChartData = function (jsonData) {
 	var data = new google.visualization.DataTable();
 	data.addColumn('datetime', 'Date');
 	data.addColumn('number', 'Average');
@@ -38,8 +38,7 @@ SensorChartUpdater.GetChartData = function (jsonData) {
 	return data;
 };
 
-
-SensorChartUpdater.DrawChart = function(chartData, className) {
+WeeklyUpdater.DrawChart = function(chartData, className) {
 	var options = {		
 		legend: { position: 'none'},
 		backgroundColor: "transparent",

@@ -1,0 +1,31 @@
+.menu-tabs {
+	font-size: 1.25em;
+}
+
+.selected-tabs {
+	color: white;
+	background-color : #337ab7;
+}
+
+.tabs {
+	border: 1px solid;
+    border-color: #337ab7;
+    padding: 0px;
+}
+
+.nav-pills > li.active > a, 
+.nav-pills > li.active > a:hover, 
+.nav-pills > li.active > a:focus {
+    color:white;
+    border-radius: 0px;
+    margin: 0px;
+	padding: 5px;
+}
+
+.nav-pills > li.active, 
+.nav-pills > li, 
+.nav-pills > li.tabs, 
+.nav-pills > li.tabs > a {
+	margin: 0px;
+	padding: 5px;
+}

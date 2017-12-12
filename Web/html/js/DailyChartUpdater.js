@@ -47,6 +47,10 @@ DailyUpdater.DrawChart = function(chartData, className) {
 	var options = {		
 		legend: { position: 'none'},
 		backgroundColor: "transparent",
+		titleTextStyle: {
+			color : '#38B',
+			italic : false
+		},
 		hAxis: {
 			gridlines: {color: '#333', count: 8},
 			minorGridlines: {count: 2},
@@ -60,8 +64,9 @@ DailyUpdater.DrawChart = function(chartData, className) {
 								0, 0, 0)
 		},
 		vAxis: {
+			color : '#38B',
 			title: className
-		}
+		}	
 	};
 	var chart = new google.visualization.LineChart(document.getElementById(className));
 	chart.draw(chartData, options);

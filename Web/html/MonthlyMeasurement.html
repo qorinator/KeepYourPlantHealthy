@@ -5,28 +5,28 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
-    <link rel="stylesheet" type="text/css" href="/html/css/custom.css"></link>
-    <link rel="stylesheet" type="text/css" href="/html/css/date.css"></link>
-    <link rel="stylesheet" type="text/css" href="/html/css/tabs.css"></link>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">   
+	<link rel="stylesheet" type="text/css" href="/html/css/custom.css"></link>
+	<link rel="stylesheet" type="text/css" href="/html/css/date.css"></link>
+	<link rel="stylesheet" type="text/css" href="/html/css/tabs.css"></link>
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>	
-
-	<script type="text/javascript" data-caller = "Weekly" src="/html/js/PageUpdater.js"> </script>
+	
+	<script type="text/javascript" data-caller = "Monthly" src="/html/js/PageUpdater.js"> </script>
 	<script type="text/javascript" src="/html/js/ContentUpdater.js"> </script>
 	<script type="text/javascript" src="/html/js/Date.js"> </script>
 	<script type="text/javascript" src="/html/js/DateUpdater.js"> </script>
-	<script type="text/javascript" src="/html/js/WeeklyChartUpdater.js"> </script>	
+	<script type="text/javascript" src="/html/js/MonthlyChartUpdater.js"> </script>
 	<script type="text/javascript" src="/html/js/Sensor.js"> </script>
 </head>
 <body>
 	<section class="chart-area">
 		<ul class="nav nav-pills nav-justified" class="menu-tabs">
-			<li class="tabs"><a href="/html/DailyMeasurement.html">Daily Measurement</a></li>
-			<li class="active tabs"><a href="/html/WeeklyMeasurement.html">Weekly Measurement</a></li>
-			<li class="tabs"><a href="/html/MonthlyMeasurement.html">Monthly</a></li>
+			<li class="tabs"><a href="/html/DailyMeasurement.html">Daily</a></li>
+			<li class="tabs"><a href="/html/WeeklyMeasurement.html">Weekly</a></li>
+			<li class="active tabs"><a href="/html/MonthlyMeasurement.html">Monthly</a></li>
 		</ul>
 
 		<div class="page responsive-calendar">
@@ -36,7 +36,7 @@
 						<i class="icon-chevron icon-chevron-rotate"></i>
 					</div>
 				</a>
-				<h4 id="textDisplay"><span id="weekDisplay"> </span></h4>
+				<h4 id="textDisplay"><span id="monthDisplay"> </span></h4>
 				<a class="pull-right" data-go="next">
 					<div class="btn" onclick="PageUpdater.Next()">
 						<i class="icon-chevron"></i>

@@ -3,26 +3,32 @@ var DateUpdater = {
 	todayDate: new Date()
 };
 
-DateUpdater.IncreaseDate = function() {
-	if(DateUpdater.current >= DateUpdater.todayDate)
-		DateUpdater.current.setDate(DateUpdater.todayDate.getDate());
-	else
-		DateUpdater.current.setDate(DateUpdater.current.getDate() + 1);
+DateUpdater.Increase = function(select) {
+	if(DateUpdater.current < DateUpdater.todayDate) {
+		switch(select) {
+		case "Daily":			
+			DateUpdater.current.setDate(DateUpdater.current.getDate() + 1);
+			break;
+		case "Weekly" :
+			DateUpdater.current.setDate(DateUpdater.current.getDate() + 7);
+			break;
+		case "Monthly" :
+			DateUpdater.current.setMonth(DateUpdater.current.getMonth() + 1);
+			break;
+		}	
+	}	
 };
 
-DateUpdater.DecreaseDate = function() {
+DateUpdater.Decrease = function(select) {
+	switch(select) {
+	case "Daily":			
 		DateUpdater.current.setDate(DateUpdater.current.getDate() - 1);
-};
-
-DateUpdater.IncreaseWeek = function() {
-	if(DateUpdater.current >= DateUpdater.todayDate)
-		DateUpdater.current.setDate(DateUpdater.todayDate.getDate());
-	else
-		DateUpdater.current.setDate(DateUpdater.current.getDate() + 7);
-	DateJs.DisplayWeek(DateUpdater.current);
-};
-
-DateUpdater.DecreaseWeek = function() {
-	DateUpdater.current.setDate(DateUpdater.current.getDate() - 7);
-	DateJs.DisplayWeek(DateUpdater.current);
+		break;
+	case "Weekly" :
+		DateUpdater.current.setDate(DateUpdater.current.getDate() - 7);
+		break;
+	case "Monthly" :
+		DateUpdater.current.setMonth(DateUpdater.current.getMonth() - 1);
+		break;
+	}	
 };

@@ -7,22 +7,28 @@ ContentUpdater.Update = function (select) {
 
 ContentUpdater.UpdateDateDisplay = function(select) {
 	switch(select) {
-		case "Daily":			
-			DateJs.DisplayDay(DateUpdater.current);
-			break;
-		case "Weekly" :
-			DateJs.DisplayWeek(DateUpdater.current);
-			break;
+	case "Daily":			
+		DateJs.DisplayDay();
+		break;
+	case "Weekly" :
+		DateJs.DisplayWeek();
+		break;
+	case "Monthly" :
+		DateJs.DisplayMonth();
+		break;
 	}	
 };
 
 ContentUpdater.UpdateChart = function(select) {	
 	switch(select) {
-		case "Daily":			
-			DailyUpdater.Update();
-			break;
-		case "Weekly":
-			SensorChartUpdater.Update();			
-			break;
+	case "Daily":			
+		DailyUpdater.Update();
+		break;
+	case "Weekly":
+		WeeklyUpdater.Update();			
+		break;
+	case "Monthly" :
+		MonthlyUpdater.Update();
+		break;
 	}
 };
