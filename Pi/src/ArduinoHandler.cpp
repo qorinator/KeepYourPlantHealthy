@@ -4,32 +4,32 @@
 #include <unistd.h>
 
 ArduinoHandler::~ArduinoHandler() {	
-	delete arduino;
-	arduino	= nullptr;
+	delete _arduino;
+	_arduino	= nullptr;
 }
 
 ArduinoHandler::ArduinoHandler() {
-	arduino = new SerialPort("/dev/ttyACM0", B115200);
+	_arduino = new SerialPort("/dev/ttyACM0", B115200);
 	sleep(2);
 	while(!GetSensorPackageFromArduino());
 }
 
 std::vector<Package> ArduinoHandler::GetPackage() {
-	return SensorPackage;
+	return _sensorPackage;
 }
 
 bool ArduinoHandler::GetSensorPackageFromArduino() {
-	arduino->SendDataRequest();
-	if(arduino->IsMessageReceived()) {
-		std::vector<unsigned int> rxBuffer =  arduino->ReadRXBuffer();
+	_arduino->SendDataRequest();
+	if(_arduino->IsMessageReceived()) {
+		std::vector<unsigned int> rxBuffer =  _arduino->ReadRXBuffer();
 
 		ProtocolUnwrapper* unwrapper = new ProtocolUnwrapper(rxBuffer);
- 		SensorPackage = unwrapper->GetPackages();
+ 		_sensorPackage = unwrapper->GetPackages();
 
  		bool packageReady = false;
 
- 		if(!SensorPackage.empty()) {
- 			arduino->FlushRXBuffer();
+ 		if(!_sensorPackage.empty()) {
+ 			_arduino->FlushRXBuffer();
  			packageReady = true;
  		}
  		

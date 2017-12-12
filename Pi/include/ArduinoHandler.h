@@ -13,8 +13,8 @@ public:
 private:
 	bool GetSensorPackageFromArduino();	
 private:
-	SerialPort* arduino;
-	std::vector<Package> SensorPackage;
+	SerialPort* _arduino;
+	std::vector<Package> _sensorPackage;
 };
 
 #endif // ARDUINOHANDLER_H
