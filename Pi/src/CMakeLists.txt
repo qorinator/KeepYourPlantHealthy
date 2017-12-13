@@ -1,5 +1,9 @@
 # Set up the compiler flags
 set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
+SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
+SET(CMAKE_C_FLAGS "-g -O0 -Wall -W -fprofile-arcs -ftest-coverage")
+SET(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
+
 
 # Tell CMake that we need the header files in these directories
 include_directories("../include")
