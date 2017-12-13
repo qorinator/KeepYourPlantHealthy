@@ -15,9 +15,9 @@ void SensorDHT11::InitializeSensor(int sensorPin) {
 void SensorDHT11::ReadDHT11() {
 	_data.clear();
 	if (GetDataFromDataBus())
-		UpdateNewData();
-	
+		UpdateNewData();	
 }
+
 bool SensorDHT11::GetDataFromDataBus() {
 	if (IsDataBusStable()) {
 		SendStartSignal();
@@ -27,6 +27,7 @@ bool SensorDHT11::GetDataFromDataBus() {
 	}
 	return false;
 }
+
 bool SensorDHT11::IsDataBusStable() {
 	if (_firstReadFlag) {
 		unsigned long currentReadingDuration = millis();
@@ -39,11 +40,13 @@ bool SensorDHT11::IsDataBusStable() {
 	else
 		return true;
 }
+
 void SensorDHT11::SendStartSignal() {
 	pinMode(_pin, OUTPUT);
 	digitalWrite(_pin, LOW);
 	delay(20);
 }
+
 void SensorDHT11::WaitForOutputReady() {
 	digitalWrite(_pin, HIGH);
 	delayMicroseconds(40);
@@ -52,6 +55,7 @@ void SensorDHT11::WaitForOutputReady() {
 	while (digitalRead(_pin) == HIGH);	// pulled ready for output
 
 }
+
 void SensorDHT11::ReadDataBus()
 {
 	// This function is time sensitive do not put any
