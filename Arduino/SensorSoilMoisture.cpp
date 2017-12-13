@@ -8,19 +8,20 @@ Package SensorSoilMoisture::GetPackage() {
 	return _package;
 }
 
-void SensorSoilMoisture::InitializeSensor(int sensorPin) {
-	_pin = sensorPin;
+void SensorSoilMoisture::InitializeSensor(int sensorID) {
+	if(sensorID == IDSoilMoistureSensor)
+		_pin = PinSoilMoistureSensor;
 }
 
 void SensorSoilMoisture::ReadSoilMoistureSensor() {
-	_data.clear();
+	_sensorValue.clear();
 	int val = analogRead(_pin);
-	_data.push_back((val & 0xFF00) >> 8);
-	_data.push_back((val & 0xFF));	
+	_sensorValue.push_back((val & 0xFF00) >> 8);
+	_sensorValue.push_back((val & 0xFF));	
 }
 
 void SensorSoilMoisture::AppendDataToPackage() {
-	_package.SetData(_data);
+	_package.SetData(_sensorValue);
 	_package.SetID(IDSoilMoistureSensor);
-	_package.SetLength(_data.size());
+	_package.SetLength(_sensorValue.size());
 }

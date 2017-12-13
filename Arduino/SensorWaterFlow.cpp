@@ -8,19 +8,20 @@ Package SensorWaterFlow::GetPackage() {
 	return _package;
 }
 
-void SensorWaterFlow::InitializeSensor(int sensorPin) {
-	_pin = sensorPin;
+void SensorWaterFlow::InitializeSensor(int sensorID) {
+	if(sensorID == IDWaterFlowSensor)
+		_pin = PinWaterFlowSensor;
 }
 
 void SensorWaterFlow::ReadWaterFlowSensor() {
-	_data.clear();
+	_sensorValue.clear();
 	int val = analogRead(_pin);
-	_data.push_back((val & 0xFF00) >> 8);
-	_data.push_back((val & 0xFF));
+	_sensorValue.push_back((val & 0xFF00) >> 8);
+	_sensorValue.push_back((val & 0xFF));
 }
 
 void SensorWaterFlow::AppendPackageToData() {
-	_package.SetData(_data);
+	_package.SetData(_sensorValue);
 	_package.SetID(IDWaterFlowSensor);
-	_package.SetLength(_data.size());
+	_package.SetLength(_sensorValue.size());
 }

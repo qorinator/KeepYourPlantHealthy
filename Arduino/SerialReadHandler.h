@@ -28,7 +28,7 @@ private:
 	bool _dataRequestStatus;
 	bool _dataRequestMessageIsFound;
 	bool _packageComplete;
-	std::vector<byte> _data;
+	std::vector<byte> _busData;
 	int _startingIndex;
 };
 

@@ -8,12 +8,13 @@ Package SensorDHT11::GetPackage() {
 	return _package;
 }
 
-void SensorDHT11::InitializeSensor(int sensorPin) {
-	_pin = sensorPin;
+void SensorDHT11::InitializeSensor(int sensorID) {
+	if(sensorID == IDDHT11)
+		_pin = PinDHT11Sensor;
 }
 
 void SensorDHT11::ReadDHT11() {
-	_data.clear();
+	_sensorValue.clear();
 	if (GetDataFromDataBus())
 		UpdateNewData();	
 }
@@ -77,7 +78,7 @@ void SensorDHT11::ReadDataBus()
 			receivedData = (receivedData << 1) + 0;
 		bitIndexCounter++;
 		if (bitIndexCounter >= 8) {
-			_data.push_back(receivedData);
+			_sensorValue.push_back(receivedData);
 			dataIndex++;
 			bitIndexCounter = 0;
 			receivedData = 0;
@@ -90,17 +91,17 @@ void SensorDHT11::UpdateNewData() {
 		RemoveChecksumFromDataVector();
 	}
 	else
-		_data.clear();
+		_sensorValue.clear();
 }
 boolean SensorDHT11::IsCheckSumOK() {
-	return ((_data[0] + _data[1] + _data[2] + _data[3]) == _data[4]);
+	return ((_sensorValue[0] + _sensorValue[1] + _sensorValue[2] + _sensorValue[3]) == _sensorValue[4]);
 }
 void SensorDHT11::RemoveChecksumFromDataVector() {
-	_data.pop_back();
+	_sensorValue.pop_back();
 }
 
 void SensorDHT11::AppenDataToPackage() {
-	_package.SetData(_data);
+	_package.SetData(_sensorValue);
 	_package.SetID(IDDHT11);
-	_package.SetLength(_data.size());
+	_package.SetLength(_sensorValue.size());
 }

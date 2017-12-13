@@ -26,14 +26,14 @@
 
 class Sensor_i
 {
-public:
+public:	
 	Sensor_i();
 	virtual ~Sensor_i() = 0;
 	virtual Package GetPackage() = 0;
 	virtual void InitializeSensor(int sensorPin) = 0;
 protected: 
 	int _pin;
-	std::vector<byte> _data;
+	std::vector<byte> _sensorValue;
 	Package _package;
 };
 

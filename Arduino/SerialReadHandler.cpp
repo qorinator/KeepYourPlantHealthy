@@ -11,7 +11,7 @@ bool SerialReadHandler::IsDataRequested() const {
 }
 
 void SerialReadHandler::AppendData(byte const& inChar) {	
-	_data.push_back(inChar);
+	_busData.push_back(inChar);
 }
 
 void SerialReadHandler::CheckForDataRequest() {
@@ -28,12 +28,12 @@ void SerialReadHandler::CheckForDataRequest() {
 }
 
 void SerialReadHandler::FlushMessageBuffer() {
-	_data.clear();
+	_busData.clear();
 }
 
 void SerialReadHandler::FindDataRequestMessage() {
-	for (size_t i = 0; i < _data.size(); i++){
-		if ((_data[i] == 0x00) && (_data[i + 1] == 0xF0) && (_data[i + 2] == 0x0E)) {			
+	for (size_t i = 0; i < _busData.size(); i++){
+		if ((_busData[i] == 0x00) && (_busData[i + 1] == 0xF0) && (_busData[i + 2] == 0x0E)) {			
 			_startingIndex = i;
 			_dataRequestMessageIsFound = true;
 		}		
@@ -42,28 +42,27 @@ void SerialReadHandler::FindDataRequestMessage() {
 
 void SerialReadHandler::WaitForMessageToBeCompleted() {	
 	if (HasNumberOfPackageArrived()) {
-		int numberOfPackage = _data[_startingIndex + 3];
+		int numberOfPackage = _busData[_startingIndex + 3];
 		int messageLength = 4;
 		messageLength = messageLength + numberOfPackage + 2;
-		if ((_data.size()) == (_startingIndex + messageLength)) {
+		if ((_busData.size()) == (_startingIndex + messageLength)) {
 			_packageComplete = true;
 		}
 	}
-	
 }
 
 bool SerialReadHandler::HasNumberOfPackageArrived() {
-	return (_data.size()) > (_startingIndex + 3);
+	return (_busData.size()) > (_startingIndex + 3);
 }
 
 bool SerialReadHandler::IsCheckSumOK() {
-	if (!_data.empty()) {
-		byte checksum = _data.back();
-		_data.pop_back();
+	if (!_busData.empty()) {
+		byte checksum = _busData.back();
+		_busData.pop_back();
 
 		byte sum = 0;
-		for (size_t i = _startingIndex; i < _data.size(); i++) {
-			sum = (sum + _data[i]) & 0xFF;
+		for (size_t i = _startingIndex; i < _busData.size(); i++) {
+			sum = (sum + _busData[i]) & 0xFF;
 		}	
 		return (sum && checksum);
 	}		

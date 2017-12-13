@@ -27,19 +27,7 @@ void setup() {
 	sensors.push_back(new SensorUV());
 	int id = 1;
 	for (auto it = sensors.begin(); it != sensors.end(); ++it) {
-		switch (id) {
-		case IDSoilMoistureSensor:
-			(*it)->InitializeSensor(PinSoilMoistureSensor);
-			break;
-		case IDDHT11:
-			(*it)->InitializeSensor(PinDHT11Sensor);
-			break;
-		case IDUVSensor:
-			(*it)->InitializeSensor(PinDummy);
-			break;
-		default:
-			break;
-		}
+		(*it)->InitializeSensor(id);
 		id++;
 	}
 }

@@ -24,7 +24,7 @@ public:
 private: 
 	byte _id;
 	byte _length;
-	std::vector<byte> _data;
+	std::vector<byte> _sensorValue;
 };
 
 #endif
