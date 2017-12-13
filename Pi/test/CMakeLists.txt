@@ -23,10 +23,35 @@ find_library(GTEST
 
 # Create executables out of the associated .cpp files
 add_executable(
-	SerialPortMessageDecoder_test
-	SerialPortMessageDecoder_test.cpp
-	../src/MessageDecoder.cpp
+	SerialDataHandler_test
+	SerialDataHandler_test.cpp
+	../src/SerialDataHandler.cpp
 )
+target_link_libraries(SerialDataHandler_test ${GTEST} Threads::Threads)
 
-# Tell Cmake to link theses executables with the gtest library
-target_link_libraries(SerialPortMessageDecoder_test ${GTEST} Threads::Threads)
+add_executable(
+	ProtocolUnwrapper_test
+	ProtocolUnwrapper_test.cpp
+	../src/ProtocolUnwrapper.cpp
+	../src/SerialDataHandler.cpp
+	../src/Package.cpp
+)
+target_link_libraries(ProtocolUnwrapper_test ${GTEST} Threads::Threads)
+
+add_executable(
+	SQLQuery_test
+	SQLQuery_test.cpp
+	../src/SQLQuery.cpp	
+	../src/SQLObject.cpp
+	../src/Package.cpp
+	../src/KYPHSensors.cpp
+)
+target_link_libraries(SQLQuery_test ${GTEST} Threads::Threads)
+
+add_executable(
+	KYPHSensors_test
+	KYPHSensors_test.cpp
+	../src/Package.cpp
+	../src/KYPHSensors.cpp
+)
+target_link_libraries(KYPHSensors_test ${GTEST} Threads::Threads)
