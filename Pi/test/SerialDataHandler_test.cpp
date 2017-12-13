@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 	return RUN_ALL_TESTS();
 }
 
-TEST_F(SerialDataHandlerTest, CaseMessageIsReady) {
+TEST_F(SerialDataHandlerTest, CaseMessageIsReady_true) {
 	SerialDataHandler handler(buffer);	
 	ASSERT_TRUE(handler.IsMessageReady());	
 }
